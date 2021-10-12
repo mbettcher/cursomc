@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,6 +26,12 @@ public class Produto implements Serializable {
 	private Double preco;
 	
 	/* Produto tem uma ou mais Categorias */
+	
+	/* A anotação JsonBackReference informa que do outro lado da relação já 
+	 * foi retornado a lista de Objetos do relacionamento e ignora de retornar
+	 * esta lista */
+	
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "produto_id"),
