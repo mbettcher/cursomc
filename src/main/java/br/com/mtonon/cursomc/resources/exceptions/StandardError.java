@@ -33,7 +33,7 @@ public class StandardError implements Serializable{
 		this.msg = msg;
 	}
 
-	public long getTimeStamp() {
+	public Long getTimeStamp() {
 		return timeStamp;
 	}
 
