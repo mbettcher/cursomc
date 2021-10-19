@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.mtonon.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -107,6 +109,7 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
+	@JsonIgnore
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}

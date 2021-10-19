@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,6 +39,7 @@ public class ItemPedido implements Serializable {
 	}
 	
 	/*Deve-se criar também os getters e setters para os objetos Pedido e Produto, que compõem o atributo Id */
+	@JsonIgnore
 	public Pedido getPedido() {
 		return this.id.getPedido();
 	}
@@ -46,7 +49,7 @@ public class ItemPedido implements Serializable {
 	}
 	
 	/* Demais getters e setters dos outros atributos da classe ItemPedido */
-
+	@JsonIgnore
 	public ItemPedidoPK getId() {
 		return id;
 	}

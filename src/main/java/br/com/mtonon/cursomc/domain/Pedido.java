@@ -16,6 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,9 +28,12 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date instante;
 	
-	/* Mapeadmento da Associação Um-para-Um com Pagamento. CascadeType.ALL é necessária senão gera erro de unidade
+	/* Mapeamento da Associação Um-para-Um com Pagamento. CascadeType.ALL é necessária senão gera erro de unidade
 	 * transiente quando for salvar Pedido e o Pagamento Dele. É uma peculiaridade do JPA.  
 	 * Informa ainda que este campo foi mapeado no outro lado da relação pelo atributo pedido */
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")

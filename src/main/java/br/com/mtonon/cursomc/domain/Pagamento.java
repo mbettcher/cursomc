@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.mtonon.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
@@ -62,6 +64,7 @@ public abstract class Pagamento implements Serializable {
 		this.estadoPagamento = estadoPagamento.getCodigo();
 	}
 
+	@JsonIgnore
 	public Pedido getPedido() {
 		return pedido;
 	}
