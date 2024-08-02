@@ -1,6 +1,7 @@
 package br.com.cdm.cursomc.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,28 +10,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categorias")
-public class Categoria implements Serializable {
-	private static final long serialVersionUID = 716218282570811759L;
+@Table(name = "produtos")
+public class Produto implements Serializable {
+
+	private static final long serialVersionUID = 4672890887441718700L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private BigDecimal preco;
 	
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
-	
-	public Categoria() {
+	@ManyToMany
+	@JoinTable(name = "produto_tem_categoria", 
+		joinColumns = @JoinColumn(name = "produto_id" ),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
+
+	public Produto() {
 	}
 
-	public Categoria(Long id, String nome) {
+	public Produto(Long id, String nome, BigDecimal preco) {
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
 	public Long getId() {
@@ -48,13 +58,21 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public BigDecimal getPreco() {
+		return preco;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override
@@ -70,8 +88,11 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	
+	
 
 }
