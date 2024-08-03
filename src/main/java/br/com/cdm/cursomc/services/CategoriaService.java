@@ -27,5 +27,11 @@ public class CategoriaService {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
 	}
+	
+	public Categoria update(Long id, Categoria obj) {
+		find(id);
+		obj.setId(id);
+		return this.categoriaRepository.save(obj);
+	}
 
 }

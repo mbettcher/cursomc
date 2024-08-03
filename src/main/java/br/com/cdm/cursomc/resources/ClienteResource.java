@@ -21,7 +21,7 @@ public class ClienteResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Cliente> find(@PathVariable("id") Long id) {
-		Cliente obj = this.clienteService.buscar(id);
+		Cliente obj = this.clienteService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
