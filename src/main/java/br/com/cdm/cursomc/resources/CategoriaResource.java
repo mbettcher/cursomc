@@ -1,8 +1,5 @@
 package br.com.cdm.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +17,6 @@ public class CategoriaResource {
 	
 	public CategoriaResource(CategoriaService categoriaService) {
 		this.categoriaService = categoriaService;
-	}
-
-	@GetMapping()
-	public List<Categoria> listar() {	
-		List<Categoria> lista = new ArrayList<>();
-		
-		return lista;
 	}
 	
 	@GetMapping(value = "/{id}")

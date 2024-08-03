@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +13,7 @@ import br.com.cdm.cursomc.domain.Cidade;
 import br.com.cdm.cursomc.domain.Cliente;
 import br.com.cdm.cursomc.domain.Endereco;
 import br.com.cdm.cursomc.domain.Estado;
+import br.com.cdm.cursomc.domain.ItemPedido;
 import br.com.cdm.cursomc.domain.Pagamento;
 import br.com.cdm.cursomc.domain.PagamentoComBoleto;
 import br.com.cdm.cursomc.domain.PagamentoComCartao;
@@ -26,6 +26,7 @@ import br.com.cdm.cursomc.repositories.CidadeRepository;
 import br.com.cdm.cursomc.repositories.ClienteRepository;
 import br.com.cdm.cursomc.repositories.EnderecoRepository;
 import br.com.cdm.cursomc.repositories.EstadoRepository;
+import br.com.cdm.cursomc.repositories.ItemPedidoRepository;
 import br.com.cdm.cursomc.repositories.PagamentoRepository;
 import br.com.cdm.cursomc.repositories.PedidoRepository;
 import br.com.cdm.cursomc.repositories.ProdutoRepository;
@@ -33,22 +34,44 @@ import br.com.cdm.cursomc.repositories.ProdutoRepository;
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 	
-	@Autowired
 	private CategoriaRepository categoriaRepository;
-	@Autowired
+
 	private ProdutoRepository produtoRepository;
-	@Autowired
+
 	private EstadoRepository estadoRepository;
-	@Autowired
+
 	private CidadeRepository cidadeRepository;
-	@Autowired
+
 	private ClienteRepository clienteRepository;
-	@Autowired
+
 	private EnderecoRepository enderecoRepository;
-	@Autowired
+
 	private PedidoRepository pedidoRepository;
-	@Autowired
+
 	private PagamentoRepository pagamentoRepository;
+	
+	private ItemPedidoRepository itemPedidoRepository;
+	
+	public CursomcApplication(
+			CategoriaRepository categoriaRepository,
+			ProdutoRepository produtoRepository,
+			EstadoRepository estadoRepository,
+			CidadeRepository cidadeRepository,
+			ClienteRepository clienteRepository,
+			EnderecoRepository enderecoRepository,
+			PedidoRepository pedidoRepository,
+			PagamentoRepository pagamentoRepository,
+			ItemPedidoRepository itemPedidoRepository) {
+		this.categoriaRepository = categoriaRepository;
+		this.produtoRepository = produtoRepository;
+		this.estadoRepository = estadoRepository;
+		this.cidadeRepository = cidadeRepository;
+		this.clienteRepository = clienteRepository;
+		this.enderecoRepository = enderecoRepository;
+		this.pedidoRepository = pedidoRepository;
+		this.pagamentoRepository = pagamentoRepository;
+		this.itemPedidoRepository = itemPedidoRepository;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -138,6 +161,27 @@ public class CursomcApplication implements CommandLineRunner {
 		/* Salvando os Cliente, Pedidos e Pagamentos */
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		/* --------------------------------------------------------------------------------------- */
+		
+		/* Intancia três item pedido */
+		ItemPedido ip1 = new ItemPedido(ped1, p1, BigDecimal.valueOf(0.00), 1, BigDecimal.valueOf(2000.00));
+		ItemPedido ip2 = new ItemPedido(ped1, p3, BigDecimal.valueOf(0.00), 2, BigDecimal.valueOf(80.00));
+		ItemPedido ip3 = new ItemPedido(ped2, p2, BigDecimal.valueOf(100.00), 1, BigDecimal.valueOf(800.00));
+		
+		/* Fazendo a associação de Pedidos aos ítens */
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		/* Fazendo a associação de Produtos aos ítens */
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		/* Salvando os itens de pedido */
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
+		
 	}
 
 }

@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CursomcApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void contextLoads() { //default implementations ignored
 	}
 
 }
