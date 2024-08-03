@@ -2,10 +2,12 @@ package br.com.cdm.cursomc.services;
 
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.cdm.cursomc.domain.Categoria;
 import br.com.cdm.cursomc.repositories.CategoriaRepository;
+import br.com.cdm.cursomc.services.exceptions.DataIntegrityException;
 import br.com.cdm.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,6 +34,17 @@ public class CategoriaService {
 		find(id);
 		obj.setId(id);
 		return this.categoriaRepository.save(obj);
+	}
+	
+	public void delete(Long id) {
+		find(id);
+		
+		try {
+			this.categoriaRepository.deleteById(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possua produtos!");
+		}
+		
 	}
 
 }
