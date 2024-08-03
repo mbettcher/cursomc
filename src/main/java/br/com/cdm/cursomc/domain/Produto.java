@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -33,7 +32,7 @@ public class Produto implements Serializable {
 	private String nome;
 	private BigDecimal preco;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "produto_tem_categoria", 
 		joinColumns = @JoinColumn(name = "produto_id" ),
