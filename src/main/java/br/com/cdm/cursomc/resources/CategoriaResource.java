@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.cdm.cursomc.domain.Categoria;
 import br.com.cdm.cursomc.dto.CategoriaDTO;
 import br.com.cdm.cursomc.services.CategoriaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value="/categorias")
@@ -38,7 +39,8 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO){
+		Categoria obj = this.categoriaService.fromDTO(objDTO);
 		obj = categoriaService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -46,7 +48,8 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody Categoria obj) {
+	public ResponseEntity<Void> update(@PathVariable(name = "id") Long id,@Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = this.categoriaService.fromDTO(objDTO);
 		this.categoriaService.update(id, obj);
 		return ResponseEntity.noContent().build();
 	}
