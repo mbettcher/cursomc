@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.cdm.cursomc.domain.Cliente;
 import br.com.cdm.cursomc.dto.ClienteDTO;
+import br.com.cdm.cursomc.dto.ClienteNewDTO;
 import br.com.cdm.cursomc.services.ClienteService;
 import jakarta.validation.Valid;
 
@@ -38,7 +39,7 @@ public class ClienteResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO){
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){
 		Cliente obj = this.clienteService.fromDTO(objDTO);
 		obj = clienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
