@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.cdm.cursomc.domain.Cliente;
-import br.com.cdm.cursomc.domain.enums.TipoCliente;
 import br.com.cdm.cursomc.dto.ClienteDTO;
 import br.com.cdm.cursomc.repositories.ClienteRepository;
 import br.com.cdm.cursomc.resources.exceptions.FieldMessage;
-import br.com.cdm.cursomc.services.validation.utils.BR;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
