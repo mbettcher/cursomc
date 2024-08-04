@@ -36,8 +36,8 @@ public class ClienteService {
 		return clienteRepository.save(obj);
 	}
 
-	public Cliente update(Long id, Cliente obj) {
-		Cliente newObj = find(id);
+	public Cliente update(Cliente obj) {
+		Cliente newObj = find(obj.getId());
 		this.updateData(newObj, obj);
 		return this.clienteRepository.save(obj);
 	}

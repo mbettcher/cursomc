@@ -35,10 +35,10 @@ public class CategoriaService {
 		return categoriaRepository.save(obj);
 	}
 	
-	public Categoria update(Long id, Categoria obj) {
-		find(id);
-		obj.setId(id);
-		return this.categoriaRepository.save(obj);
+	public Categoria update(Categoria obj) {
+		Categoria newObj = find(obj.getId());
+		this.updateData(newObj, obj);
+		return this.categoriaRepository.save(newObj);
 	}
 	
 	public void delete(Long id) {
@@ -63,6 +63,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDTO) {
 		return new Categoria(objDTO.getId(), objDTO.getNome());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 }
