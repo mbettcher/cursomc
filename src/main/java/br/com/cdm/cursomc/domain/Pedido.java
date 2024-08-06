@@ -1,6 +1,7 @@
 package br.com.cdm.cursomc.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class Pedido implements Serializable {
 	private Endereco enderecoEntrega;
 	
 	@OneToMany(mappedBy = "id.pedido")
-	private transient Set<ItemPedido> itens = new HashSet<>();
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido() {}
 
@@ -56,6 +57,14 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoEntrega = enderecoEntrega;
+	}
+	
+	public BigDecimal getValorTotal() {
+		BigDecimal soma = BigDecimal.ZERO;
+		for(ItemPedido itemPedido: itens) {
+			soma = soma.add(itemPedido.getSubTotal());
+		}
+		return soma;
 	}
 
 	public Long getId() {
